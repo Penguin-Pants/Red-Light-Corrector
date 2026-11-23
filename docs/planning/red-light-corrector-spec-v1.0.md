@@ -2,7 +2,8 @@
 
 **Specification:** v1.0 (frozen)  
 **Approved:** 2026-11-23  
-**Status:** Approved planning baseline. Implementation and feasibility testing are not authorized.  
+**Status:** Approved requirements baseline. Implementation is authorized. Target testing and release approval are pending.
+
 **Repository:** https://github.com/Penguin-Pants/Red-Light-Corrector  
 **Target:** Windows 11, Chrome, offline local HTML application
 
@@ -196,4 +197,4 @@ Verify offline operation, image quality, privacy, Chrome behavior on Windows 11 
 
 This document is the **frozen v1.0 requirements baseline**. Changes require a documented proposed revision and user approval. A build plan may refine implementation details but may not silently change requirements or treat unverified feasibility assumptions as facts.
 
-**Authorization status:** The user approved the specification and phased plan, then froze implementation. Creating, committing and merging planning documentation and drafting a build plan are allowed when explicitly requested. No application code, feasibility experiments, dependency installation or implementation work is authorized by that documentation request.
+**Authorization history:** The initial approval covered planning documentation. On 23 November 2026 the owner subsequently authorized execution of all phases and asked the team to proceed without interim approval pauses. The owner retained the Windows and quality checks for local testing before release.

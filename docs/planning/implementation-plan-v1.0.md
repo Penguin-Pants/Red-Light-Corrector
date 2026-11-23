@@ -6,9 +6,9 @@ Planning only · 23 November 2026 · [Frozen v1.0 specification](red-light-corre
 
 Execution was requested on 23 November 2026. Repository preflight confirmed that the plan is merged into `main` and that the checkout contains documentation only. The checkout had no existing application implementation or test suite at preflight.
 
-- **Phase 1 is in progress.** The initial launch smoke harness is under `feasibility/harness/`. The user reported passing direct-file smoke checks in Chrome and Firefox, including marker persistence after reopening. Firefox is supplemental. Chrome is the sole required browser on Windows 11 under the approved scope amendment. The integrated F1 verdict is pending. Linux loopback checks now cover synthetic bundled HEIC decoding (F2), recursive folder selection and simulated picker outcomes (F5), and a small Canvas color round trip (F7).
-- **Phases 2–6 are pending.** Phase 2 depends on reviewed Phase 1 results and user approval of the resulting architecture and dependencies. Later phases depend on their listed validation and sign-offs.
-- **Remaining work.** Verify the F2, F5 and F7 probes in Chrome on Windows 11, then finish the integrated harness and F1–F8 evidence. Record the Chrome version and confirm the offline run when collecting integrated evidence. The numeric targets in this plan are provisional benchmarks. The user will decide quality acceptance after local testing. No out-of-scope fixes are proposed.
+- **Phases 1–6 have an implementation candidate.** After the initial F1 smoke check, the owner asked to complete the implementation without interim approval pauses. The implementation uses a pinned HEIC worker, Canvas correction, a review interface, batch export, settings-only presets and offline packaging.
+- **Validation status.** Component tests and packaged Linux Chromium loopback checks passed. The owner’s Windows Chrome integrated run, representative image quality, full batch stress and release approval remain open. See [release validation](release-validation-v1.0.md) for remaining work and the two-pass review.
+- **Out of scope.** Firefox results remain supplemental. No Edge gate or optional AI capability is required. No production release has been published.
 
 #### F1 smoke evidence
 
@@ -18,7 +18,7 @@ The smoke harness supplied for testing was revision `c2a4493`. Chrome and Firefo
 
 Review the complete phase diff in two passes. First, identify potential issues. Second, challenge each finding against the diff, requirements and available evidence, and remove weak or unsupported claims. Report confirmed issues, possible risks and a recommendation for what to fix or defer.
 
-Use the user question tool to confirm the fix scope. Include **Fix all confirmed issues** and **Fix all confirmed issues + Deferred items now** as options. Apply the selected fixes, validate the revised diff and update the phase PR after the required local checks pass.
+By default use the user question tool to confirm the fix scope. The owner waived interim prompts for this implementation candidate. Include **Fix all confirmed issues** and **Fix all confirmed issues + Deferred items now** as options. Apply the selected fixes, validate the revised diff and update the phase PR after the required local checks pass.
 
 ## 1. Executive summary
 

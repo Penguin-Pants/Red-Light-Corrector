@@ -43,7 +43,7 @@
           return;
         }
 
-        const profileCode = lib.heif_image_handle_get_color_profile_type(primary.handle);
+        const profileCode = lib._heif_image_handle_get_color_profile_type(primary.handle.$$.ptr);
         const profile = new Map([
           [0x6e636c78, 'NCLX'],
           [0x70726f66, 'ICC'],
