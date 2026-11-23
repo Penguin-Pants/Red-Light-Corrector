@@ -2,9 +2,12 @@
 
 **Specification:** v1.0 (frozen)  
 **Approved:** 2026-11-23  
-**Status:** Approved planning baseline. Implementation and feasibility testing are not authorized.  
+**Status:** Approved requirements baseline. Implementation is authorized. Target testing and release approval are pending.
+
 **Repository:** https://github.com/Penguin-Pants/Red-Light-Corrector  
-**Target:** Windows 11, Chrome and Edge, offline local HTML application
+**Target:** Windows 11, Chrome, offline local HTML application
+
+**Approved scope amendment (2026-11-23).** Chrome is the sole required browser on Windows 11. Microsoft Edge was removed from the support and acceptance matrix at the user’s request.
 
 ## 1. Purpose and scope
 
@@ -21,7 +24,7 @@ Support HEIC, JPEG and PNG inputs, recursive folder import, batches of up to 100
 
 ## 2. Launch and packaging
 
-- Prefer launching by double-clicking `index.html` in Chrome or Edge (`file://`).
+- Prefer launching by double-clicking `index.html` in Chrome (`file://`).
 - A local folder with HTML, JavaScript, CSS and bundled libraries is acceptable. No CDN or network dependencies.
 - A small local launcher is acceptable **only if feasibility tests demonstrate that direct HTML launch cannot reliably satisfy critical requirements**. Document the failed test and minimum launcher functionality before adopting it.
 - The application must run without internet access. No remote telemetry, analytics or image transfer.
@@ -127,7 +130,7 @@ Initial technology candidates: HTML, CSS, vanilla JavaScript, Canvas 2D and opti
 
 | Gate | Test | Pass criteria |
 |---|---|---|
-| F1 | `file://` launch in Chrome and Edge | Core workflows and required bundled libraries work fully offline, or a documented minimum local launcher is justified |
+| F1 | `file://` launch in Chrome | Core workflows and required bundled libraries work fully offline, or a documented minimum local launcher is justified |
 | F2 | HEIC decode | Representative iPhone HEIC files decode correctly, including orientation and color handling |
 | F3 | Correction quality | Representative red-LED photos show useful improvement without unacceptable artifacts; known impossible cases are flagged |
 | F4 | Metadata round trip | Compatible EXIF/GPS and other target fields survive tested JPEG/PNG exports, with documented exceptions |
@@ -162,11 +165,11 @@ Add persistent presets and preferences, improve performance and strengthen error
 
 ### Phase 6: Validation and packaging
 
-Verify offline operation, image quality, privacy, cross-browser behavior and documentation. **Deliverable:** portable application and test results. **Gate:** final release approval.
+Verify offline operation, image quality, privacy, Chrome behavior on Windows 11 and documentation. **Deliverable:** portable application and test results. **Gate:** final release approval.
 
 ## 11. Acceptance criteria
 
-- Offline operation in supported launch mode on Windows 11 with Chrome and Edge.
+- Offline operation in supported launch mode on Windows 11 with Chrome.
 - HEIC, JPEG and PNG inputs and recursive folder import of up to 100 images.
 - Automatic per-image analysis, best-candidate selection and three modes.
 - Individual and shared adjustments, with simple and advanced controls.
@@ -194,4 +197,4 @@ Verify offline operation, image quality, privacy, cross-browser behavior and doc
 
 This document is the **frozen v1.0 requirements baseline**. Changes require a documented proposed revision and user approval. A build plan may refine implementation details but may not silently change requirements or treat unverified feasibility assumptions as facts.
 
-**Authorization status:** The user approved the specification and phased plan, then froze implementation. Creating, committing and merging planning documentation and drafting a build plan are allowed when explicitly requested. No application code, feasibility experiments, dependency installation or implementation work is authorized by that documentation request.
+**Authorization history:** The initial approval covered planning documentation. On 23 November 2026 the owner subsequently authorized execution of all phases and asked the team to proceed without interim approval pauses. The owner retained the Windows and quality checks for local testing before release.

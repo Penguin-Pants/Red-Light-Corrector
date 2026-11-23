@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; worker-src blob:; img-src blob:; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <title>Red Light Corrector</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="decoder-source.js"></script>
+  <script defer src="worker-source.js"></script>
+  <script defer src="src/metadata.js"></script>
+  <script defer src="src/zip.js"></script>
+  <script defer src="src/presets.js"></script>
+  <script defer src="src/app.js"></script>
+</head>
+<body>
+  <header>
+    <div><h1>Red Light Corrector</h1><p>Review and correct red-lit photos on this device.</p></div>
+    <div class="actions">
+      <label class="button">Import folder<input type="file" id="folder" webkitdirectory multiple></label>
+      <label class="button secondary">Import files<input type="file" id="files" accept=".heic,.heif,.jpg,.jpeg,.png" multiple></label>
+      <button id="clear" class="secondary" type="button">Clear photos</button>
+    </div>
+  </header>
+  <div class="activity">
+    <p id="status" role="status" aria-live="polite">Import a folder or choose photos to begin.</p>
+    <progress id="progress" max="1" value="0" hidden></progress>
+    <button id="cancel" type="button" disabled>Cancel</button>
+    <button id="retry" type="button" disabled>Retry unfinished</button>
+  </div>
+  <main>
+    <aside class="gallery">
+      <h2>Photos</h2>
+      <label><input id="filter" type="checkbox"> Low confidence only</label>
+      <ul id="photos" aria-label="Imported photos"></ul>
+    </aside>
+    <section class="workspace" aria-labelledby="photo-title">
+      <h2 id="photo-title">No photo selected</h2>
+      <div class="comparison">
+        <figure><figcaption>Original</figcaption><img id="original" alt="Original preview" hidden></figure>
+        <figure><figcaption>Corrected</figcaption><img id="corrected" alt="Corrected preview" hidden></figure>
+      </div>
+      <p id="confidence"></p>
+      <p id="clipping" class="warning"></p>
+      <p id="color-warning" class="warning"></p>
+    </section>
+    <aside class="adjustments">
+      <h2>Adjustments</h2>
+      <label>Mode
+        <select id="mode"><option>Natural</option><option>Balanced</option><option>Aggressive</option></select>
+      </label>
+      <label>Apply to
+        <select id="scope"><option value="photo">This photo</option><option value="selected">Checked photos</option><option value="batch">Whole batch</option></select>
+      </label>
+      <label>Exposure <output for="exposure"></output><input id="exposure" type="range" min="-2" max="2" step=".05" value="0"></label>
+      <label>Warmth <output for="warmth"></output><input id="warmth" type="range" min="-1" max="1" step=".05" value="0"></label>
+      <details>
+        <summary>Advanced adjustments</summary>
+        <label>Saturation <output for="saturation"></output><input id="saturation" type="range" min="-1" max="1" step=".05" value="0"></label>
+        <label>Contrast <output for="contrast"></output><input id="contrast" type="range" min="-.5" max=".5" step=".05" value="0"></label>
+      </details>
+      <button id="apply" type="button">Apply adjustments</button>
+      <button id="reset" class="secondary" type="button">Reset adjustments</button>
+      <details>
+        <summary>Saved presets</summary>
+        <label>Preset name<input id="preset-name" maxlength="60" type="text"></label>
+        <button id="save-preset" type="button">Save preset</button>
+        <label>Existing presets<select id="presets"></select></label>
+        <button id="load-preset" class="secondary" type="button">Load preset</button>
+        <button id="delete-preset" class="secondary" type="button">Delete preset</button>
+        <p id="preset-status" role="status"></p>
+      </details>
+    </aside>
+    <section class="exports" aria-labelledby="export-title">
+      <h2 id="export-title">Export</h2>
+      <div class="export-options">
+        <label>Photos<select id="export-scope"><option value="all">All ready photos</option><option value="selected">Checked photos</option><option value="photo">This photo</option></select></label>
+        <fieldset><legend>Modes</legend>
+          <label><input type="checkbox" name="export-mode" value="Natural" checked> Natural</label>
+          <label><input type="checkbox" name="export-mode" value="Balanced"> Balanced</label>
+          <label><input type="checkbox" name="export-mode" value="Aggressive"> Aggressive</label>
+        </fieldset>
+        <label>Format<select id="format"><option value="image/jpeg">JPEG</option><option value="image/png">PNG</option></select></label>
+        <label>Longest side<select id="size"><option value="0">Original size</option><option value="4096">4096 px</option><option value="2048">2048 px</option><option value="1024">1024 px</option></select></label>
+      </div>
+      <div class="actions">
+        <button id="save-folder" type="button">Save to folder</button>
+        <button id="save-zip" class="secondary" type="button">Export ZIP</button>
+        <button id="download" type="button" hidden>Download ZIP</button>
+        <button id="retry-export" class="secondary" type="button" hidden>Retry incomplete exports</button>
+      </div>
+      <p>Exports can retain GPS and other compatible EXIF fields. Metadata changes appear below.</p>
+      <ul id="export-log" aria-label="Export results"></ul>
+    </section>
+  </main>
+  <footer>Missing color information cannot be recovered reliably. Confidence describes the automatic correction.</footer>
+</body>
+</html>
