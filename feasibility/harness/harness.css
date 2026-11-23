@@ -1,0 +1,26 @@
+body {
+  color: #252221;
+  background: #faf8f5;
+  font: 1rem/1.5 system-ui, sans-serif;
+  margin: 0;
+}
+
+main {
+  max-width: 42rem;
+  margin: 3rem auto;
+  padding: 0 1.25rem;
+}
+
+button {
+  font: inherit;
+  margin: 0 .5rem .25rem 0;
+  padding: .45rem .8rem;
+}
+
+dt {
+  font-weight: 600;
+}
+
+dd {
+  margin: 0 0 .6rem;
+}
