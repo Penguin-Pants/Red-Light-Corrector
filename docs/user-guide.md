@@ -11,7 +11,7 @@ Open `dist/red-light-corrector/index.html` in Chrome on Windows 11. You can copy
 1. Drop image files anywhere on the page, choose files with **Import files**, or use **Import folder** to include subfolders. The app accepts up to 100 JPEG, PNG or HEIC candidates. Failed images remain in the list so you can retry or clear the batch.
 2. Select a photo and compare the previews. Select a mode. Use **Low confidence only** to find cases that need review.
 3. Change the controls and select **Apply adjustments** to use them for exports. Choose this photo, checked photos or the whole batch. Save a named preset to reuse the controls later.
-4. Select the photos, modes and format to export. Choose **Original size** to retain the full dimensions. **Save to folder** creates a new dedicated subfolder. If the picker is unavailable or denied, select **Export ZIP**.
+4. Select the photos, modes and format to export. For **Checked photos**, use **Select all** or **Select none** in the gallery to check or clear every imported photo, including photos hidden by the filter. Only ready photos are exported. Choose **Original size** to retain the full dimensions. **Save to folder** creates a new dedicated subfolder. If the picker is unavailable or denied, select **Export ZIP**.
 5. For ZIP export, click each numbered download button when it appears. If there is more than one archive, extract all parts into the same folder. Names are coordinated across parts. The browser controls completion of the download. The app only reports the handoff.
 
 ## Privacy and limits

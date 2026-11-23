@@ -31,6 +31,10 @@
   <main>
     <aside class="gallery">
       <h2>Photos</h2>
+      <div class="actions">
+        <button id="select-all" class="secondary" type="button" title="Check all imported photos, including photos hidden by the filter" disabled>Select all</button>
+        <button id="select-none" class="secondary" type="button" title="Uncheck all imported photos" disabled>Select none</button>
+      </div>
       <label><input id="filter" type="checkbox"> Low confidence only</label>
       <ul id="photos" aria-label="Imported photos"></ul>
     </aside>
