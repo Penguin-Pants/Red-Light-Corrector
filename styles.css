@@ -7,6 +7,15 @@
 
 * { box-sizing: border-box; }
 body { margin: 0 auto; max-width: 100rem; padding: 1.6rem; }
+.dragging-photos body::after {
+  content: "";
+  position: fixed;
+  z-index: 1;
+  inset: .45rem;
+  border: 3px dashed #8b302a;
+  border-radius: .65rem;
+  pointer-events: none;
+}
 header, .activity, .actions, .export-options { display: flex; align-items: center; flex-wrap: wrap; gap: .8rem; }
 header { justify-content: space-between; }
 h1, h2, p { margin: 0 0 .6rem; }

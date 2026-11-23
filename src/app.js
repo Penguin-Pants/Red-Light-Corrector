@@ -452,6 +452,21 @@
       target.value = '';
     });
   }
+  window.addEventListener('dragover', (event) => {
+    if (!event.dataTransfer?.types.includes('Files')) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = state.busy ? 'none' : 'copy';
+    document.documentElement.classList.toggle('dragging-photos', !state.busy);
+  });
+  window.addEventListener('dragleave', (event) => {
+    if (!event.relatedTarget) document.documentElement.classList.remove('dragging-photos');
+  });
+  window.addEventListener('drop', (event) => {
+    document.documentElement.classList.remove('dragging-photos');
+    if (!event.dataTransfer?.types.includes('Files')) return;
+    event.preventDefault();
+    if (!state.busy) importFiles(event.dataTransfer.files, false);
+  });
   byId('clear').onclick = () => {
     if (state.busy) return;
     for (const photo of state.photos) {
