@@ -2,6 +2,8 @@
 
 Correct photos taken under strong red lighting in Chrome on Windows 11. The app imports photos locally, previews the correction, and exports JPEG or PNG without a server or an account.
 
+The **Video** tab batch-corrects MP4 and MOV clips using local FFmpeg. It requires the loopback launcher described in the [user guide](docs/user-guide.md#correct-videos).
+
 ## Prepare and test
 
 Install Node.js 22 or later, open a terminal in the extracted repository, and run:
