@@ -74,6 +74,7 @@
   function list() {
     const node = byId('photos');
     const active = document.activeElement?.dataset?.focusKey;
+    byId('select-all').disabled = byId('select-none').disabled = state.photos.length === 0;
     node.replaceChildren();
     for (const photo of state.photos) {
       if (byId('filter').checked && photo.recipes?.[photo.mode].confidence !== 'Low') continue;
@@ -494,6 +495,14 @@
     if (jobs.length) void performExport(lastExport, jobs, lastExport.direct && !lastExport.destination);
   };
   byId('filter').onchange = list;
+  byId('select-all').onclick = () => {
+    for (const photo of state.photos) state.checked.add(photo.id);
+    list();
+  };
+  byId('select-none').onclick = () => {
+    state.checked.clear();
+    list();
+  };
   byId('mode').onchange = () => {
     settings.mode = byId('mode').value;
     if (state.current) state.current.mode = settings.mode;

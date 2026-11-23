@@ -28,6 +28,7 @@ main { display: grid; grid-template-columns: minmax(12rem, 1fr) minmax(0, 3fr) m
 main > * { background: #fffcf9; border: 1px solid #ded3cb; border-radius: .65rem; padding: 1rem; min-width: 0; }
 .exports { grid-column: 2 / -1; }
 .export-options { align-items: end; margin-bottom: .8rem; }
+.gallery .actions { gap: .35rem; margin-bottom: .55rem; }
 button, .button, select, input { font: inherit; }
 button, .button { cursor: pointer; background: #8b302a; color: #fff; border: 1px solid #8b302a; border-radius: .35rem; padding: .38rem .7rem; }
 button.secondary, .button.secondary, #cancel, #retry { background: #fffaf6; color: #542b26; border-color: #cab2aa; }

@@ -24,6 +24,12 @@ async function test() {
     const errors = [];
     page.on('pageerror', (error) => errors.push(error.message));
     await page.goto(address.href);
+    const selectAll = page.getByRole('button', { name: 'Select all', exact: true });
+    const selectNone = page.getByRole('button', { name: 'Select none', exact: true });
+    const checked = page.locator('#photos input:checked');
+    assert.equal(await selectAll.count(), 1);
+    assert.equal(await selectAll.isDisabled(), true);
+    assert.equal(await selectNone.isDisabled(), true);
     const images = await page.evaluate(() => {
       const canvas = document.createElement('canvas');
       canvas.width = 96;
@@ -61,6 +67,20 @@ async function test() {
 
     await page.locator('#format').selectOption('image/png');
     await page.locator('[name="export-mode"][value="Balanced"]').check();
+    await selectAll.click();
+    assert.equal(await checked.count(), 4);
+    await page.locator('#filter').check();
+    await selectNone.click();
+    await page.locator('#filter').uncheck();
+    assert.equal(await checked.count(), 0);
+    assert.match(await page.locator('#photo-title').textContent(), /test\.png$/);
+    await page.locator('#export-scope').selectOption('selected');
+    await page.getByRole('button', { name: 'Export ZIP' }).click();
+    assert.match(await page.locator('#status').textContent(), /Select at least one ready photo/);
+    await page.locator('#filter').check();
+    await selectAll.click();
+    await page.locator('#filter').uncheck();
+    assert.equal(await checked.count(), 4);
     await page.getByRole('button', { name: 'Export ZIP' }).click();
     const button = page.getByRole('button', { name: 'Download ZIP 1' });
     await button.waitFor();
@@ -162,9 +182,15 @@ async function test() {
     await page.getByRole('button', { name: 'Retry unfinished' }).click();
     await page.waitForFunction(() => document.querySelector('#status').textContent.startsWith('Analysis complete.'));
     assert.equal(await page.locator('#photos li').filter({ hasText: /confidence/ }).count(), 100);
+    await selectAll.click();
+    assert.equal(await checked.count(), 100);
+    await selectNone.click();
+    assert.equal(await checked.count(), 0);
     process.stdout.write('100-photo synthetic count, cancel and retry: ' + (Date.now() - browserRun) + ' ms\n');
     await page.getByRole('button', { name: 'Clear photos' }).click();
     assert.equal(await page.locator('#photos li').count(), 0);
+    assert.equal(await selectAll.isDisabled(), true);
+    assert.equal(await selectNone.isDisabled(), true);
     assert.deepEqual(attempted, []);
     assert.deepEqual(errors, []);
     await context.close();
