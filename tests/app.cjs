@@ -112,6 +112,24 @@ async function test() {
     assert.equal(await page.locator('#photos li').count(), 0);
     assert.equal(await page.locator('#presets option').count(), 1);
     assert.equal(await page.locator('#format').inputValue(), 'image/png');
+    const drop = await page.evaluate((source) => {
+      const dataTransfer = new DataTransfer();
+      const bytes = Uint8Array.from(atob(source), (character) => character.charCodeAt(0));
+      dataTransfer.items.add(new File([bytes], 'dropped.png', { type: 'image/png' }));
+      dataTransfer.items.add(new File(['ignore'], 'unsupported.txt', { type: 'text/plain' }));
+      const target = document.querySelector('.exports');
+      const send = (type) => !target.dispatchEvent(new DragEvent(type, { bubbles: true, cancelable: true, dataTransfer }));
+      const dragoverPrevented = send('dragover');
+      const highlighted = document.documentElement.classList.contains('dragging-photos');
+      const dropPrevented = send('drop');
+      return { dragoverPrevented, highlighted, dropPrevented };
+    }, images[1]);
+    assert.deepEqual(drop, { dragoverPrevented: true, highlighted: true, dropPrevented: true });
+    await page.waitForFunction(() => document.querySelector('#status').textContent.startsWith('Analysis complete.'));
+    assert.match(await page.locator('#status').textContent(), /1 processed, 0 failed.*unsupported files skipped/);
+    assert.match(await page.locator('#photos li').textContent(), /dropped\.png.*confidence/);
+    assert.equal(await page.locator('html.dragging-photos').count(), 0);
+    await page.getByRole('button', { name: 'Clear photos' }).click();
     let batchBytes = Buffer.from(images[1], 'base64');
     let suffix = 'png';
     if (process.env.RLC_FULL_RES_TEST) {

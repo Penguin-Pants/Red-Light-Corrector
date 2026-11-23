@@ -18,7 +18,7 @@ Status on 23 November 2026. The implementation candidate is ready for owner test
 - Run `node tests/correction.cjs` and `node tests/metadata.cjs`.
 - Run `node packaging/build.mjs`. A local copy of the pinned dependency archive can be passed as an argument.
 - Serve only `dist/red-light-corrector` on `127.0.0.1:18748` and run `node tests/app.cjs` with Playwright available. Set `RLC_CHROMIUM_PATH` for a system Chromium. Set `RLC_FULL_RES_TEST=1` for 100 synthetic 12 MP photos. Set `RLC_TEST_ZIP` to a temporary path to retain the synthetic ZIPs for inspection.
-- The Playwright suite checks remote requests, nested imports, invalid input, modes and adjustments, ZIP handoff, mock folder writes, cancel/retry, limits, settings reload and clearing in-memory photo state.
+- The Playwright suite checks remote requests, nested imports, page-wide drag and drop, invalid input, modes and adjustments, ZIP handoff, mock folder writes, cancel/retry, limits, settings reload and clearing in-memory photo state.
 - An independent Pillow reader inspected the downloaded synthetic HEIC-derived JPEG and PNG. Dimensions, make, GPS hemisphere references and output ICC were present. ZIP integrity checks passed. A separate test covers basic XMP and JPEG IPTC. PNG IPTC remapping, extended XMP, offset-dependent MakerNotes and HEIC HDR preservation are not established.
 
 ## Windows acceptance checklist
