@@ -1,0 +1,12 @@
+#video-output a { color: #772820; text-underline-offset: .18em; }
+#startup { margin: 1rem 0; }
+#videos { max-height: 65vh; overflow: auto; }
+#videos li { display: flex; align-items: center; gap: .4rem; margin: .28rem 0; }
+#videos button { width: 100%; min-width: 0; text-align: start; overflow-wrap: anywhere; }
+#videos button[aria-current=true] { background: #f3ded9; }
+#video-settings { display: block; border: 0; padding: 0; }
+figure video { display: block; width: 100%; max-height: 57vh; object-fit: contain; }
+.preview-controls { margin: .65rem 0; align-items: end; }
+.preview-controls input { display: block; width: 7rem; }
+#video-destination { max-width: 16rem; margin-bottom: .5rem; }
+#video-output li { border-top: 1px solid #ede2da; padding: .3rem 0; overflow-wrap: anywhere; }

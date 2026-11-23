@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; media-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+  <title>Video · Red Light Corrector</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="video.css">
+  <script defer src="video/app.js"></script>
+</head>
+<body>
+  <header>
+    <div><h1>Red Light Corrector</h1><p>Correct red lighting in videos on this device.</p></div>
+    <nav class="actions" aria-label="Media type">
+      <a href="index.html">Photos</a>
+      <a href="video.html" aria-current="page">Video</a>
+    </nav>
+  </header>
+  <section id="startup" hidden>
+    <h2>Start the local video app</h2>
+    <p>Install FFmpeg and ffprobe, then run <code>node launch.mjs</code> in the packaged app folder. Open the local address shown in the terminal.</p>
+  </section>
+  <div id="video-app" hidden>
+    <div class="activity">
+      <label class="button">Import videos<input id="video-files" type="file" accept=".mov,.mp4,video/quicktime,video/mp4" multiple></label>
+      <p id="video-status" role="status">Drop MP4 or MOV videos anywhere on this page.</p>
+      <button id="video-cancel" type="button" disabled>Cancel</button>
+    </div>
+    <main>
+      <aside class="gallery">
+        <h2>Videos</h2>
+        <div class="actions">
+          <button id="video-all" class="secondary" type="button">Select all</button>
+          <button id="video-none" class="secondary" type="button">Select none</button>
+          <button id="video-clear" class="secondary" type="button">Clear videos</button>
+        </div>
+        <ul id="videos" aria-label="Imported videos"></ul>
+      </aside>
+      <section class="workspace" aria-labelledby="video-title">
+        <h2 id="video-title">No video selected</h2>
+        <div class="comparison">
+          <figure><figcaption>Original color</figcaption><video id="video-original" controls muted playsinline preload="metadata" hidden></video></figure>
+          <figure><figcaption>Corrected</figcaption><video id="video-corrected" controls muted playsinline preload="metadata" hidden></video></figure>
+        </div>
+        <div class="actions preview-controls">
+          <label>Start (seconds)<input id="video-start" type="number" min="0" max="86400" step=".1" value="0"></label>
+          <button id="video-preview" type="button">Preview 8 seconds</button>
+          <button id="video-play" class="secondary" type="button" disabled>Play both</button>
+        </div>
+        <p id="video-preview-notes"></p>
+      </section>
+      <aside class="adjustments">
+        <h2>Correction</h2>
+        <fieldset id="video-settings">
+          <label>Apply to<select id="video-scope"><option value="shared">Shared preset</option><option value="clip">This video</option></select></label>
+          <label>Preset<select id="video-preset"><option>Natural</option><option>Balanced</option><option>Aggressive</option><option disabled>Custom</option></select></label>
+          <label>Red <output for="video-red"></output><input id="video-red" type="range" min="-.5" max=".5" step=".01"></label>
+          <label>Green <output for="video-green"></output><input id="video-green" type="range" min="-.5" max=".5" step=".01"></label>
+          <label>Blue <output for="video-blue"></output><input id="video-blue" type="range" min="-.5" max=".5" step=".01"></label>
+          <label>Saturation <output for="video-saturation"></output><input id="video-saturation" type="range" min="0" max="1.5" step=".01"></label>
+          <button id="video-reset" class="secondary" type="button">Use shared preset for this video</button>
+        </fieldset>
+      </aside>
+      <section class="exports">
+        <h2>Export checked videos</h2>
+        <label>Destination<select id="video-destination"><option value="folder">Save to a folder</option><option value="downloads">Prepare downloads</option></select></label>
+        <button id="video-export" type="button">Export checked</button>
+        <p>MP4 exports use SDR. Audio is copied when compatible and converted otherwise. Descriptive metadata is removed.</p>
+        <ul id="video-output" aria-label="Video export results"></ul>
+      </section>
+    </main>
+  </div>
+  <footer>Color information absent from the recording cannot be recovered reliably.</footer>
+</body>
+</html>

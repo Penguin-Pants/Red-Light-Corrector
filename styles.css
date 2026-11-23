@@ -22,6 +22,8 @@ h1, h2, p { margin: 0 0 .6rem; }
 h1 { font-size: clamp(1.7rem, 4vw, 2.6rem); letter-spacing: -.035em; }
 h2 { font-size: 1.1rem; }
 header p, footer { color: #624f4a; }
+nav a { color: #772820; text-underline-offset: .18em; }
+nav [aria-current] { font-weight: 700; }
 .activity { margin: 1rem 0; border-block: 1px solid #dacfcb; padding: .65rem 0; }
 .activity p { margin: 0 auto 0 0; }
 main { display: grid; grid-template-columns: minmax(12rem, 1fr) minmax(0, 3fr) minmax(12rem, 1fr); gap: 1rem; align-items: start; }

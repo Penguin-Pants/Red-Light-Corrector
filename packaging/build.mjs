@@ -39,9 +39,16 @@ const bundle = packageFiles.get('package/libheif-wasm/libheif-bundle.js');
 if (!bundle || sha256(bundle) !== bundleHash) throw new Error('The HEIC worker bundle did not match its pinned checksum.');
 
 await mkdir(join(destination, 'src'), { recursive: true });
+await mkdir(join(destination, 'video'), { recursive: true });
 const files = [
   ['index.html', 'index.html'],
   ['styles.css', 'styles.css'],
+  ['video.html', 'video.html'],
+  ['video.css', 'video.css'],
+  ['launch.mjs', 'launch.mjs'],
+  ['video/app.js', 'video/app.js'],
+  ['video/server.mjs', 'video/server.mjs'],
+  ['video/transcode.mjs', 'video/transcode.mjs'],
   ['src/app.js', 'src/app.js'],
   ['src/metadata.js', 'src/metadata.js'],
   ['src/presets.js', 'src/presets.js'],

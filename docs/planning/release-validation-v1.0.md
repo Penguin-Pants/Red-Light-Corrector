@@ -33,6 +33,10 @@ GitHub Actions runs the unit tests, offline package checks and packaged Chromium
 
 Do not publish private photos or derived results. A sanitized pass, fail or issue summary is enough.
 
+## Video extension checks
+
+The packaged video test uses generated footage to check fixed correction, two playback previews and range serving, batch controls, copied AAC audio, AAC conversion for PCM and HLG-to-SDR output. It also exercises local request checks and temporary file cleanup. Run `node tests/video.cjs` after building, with Playwright, FFmpeg and ffprobe available. Verify Windows Chrome playback, real folder saving and representative iPhone footage separately.
+
 ## Two-pass review and disposition
 
 The first pass found three concrete issues in the candidate: preview jobs included the HEIC bundle for JPEG and PNG, export retry could be masked by a failed import, and the bundled API’s high-level profile accessor did not consistently match the low-level handle for the ICC fixture. The second pass reproduced the ICC disagreement and traced the retry control flow and worker startup. The fixes use separate worker sources, a distinct export retry control and the verified low-level profile accessor. Unit and browser checks were repeated.
