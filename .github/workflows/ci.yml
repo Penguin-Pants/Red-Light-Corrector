@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Unit and browser tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: '22'
+
+      - name: Run unit tests
+        run: |
+          node tests/correction.cjs
+          node tests/metadata.cjs
+
+      - name: Build and check the offline package
+        run: |
+          node packaging/build.mjs
+          unzip -tq dist/red-light-corrector.zip
+          cd dist/red-light-corrector
+          sha256sum -c SHA256SUMS.txt
+
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --prefix "$RUNNER_TEMP/rlc-ci" --no-audit --no-fund --no-package-lock playwright@1.62.1
+          "$RUNNER_TEMP/rlc-ci/node_modules/.bin/playwright" install --with-deps chromium
+
+      - name: Test the packaged app
+        run: |
+          python3 -m http.server 18748 --bind 127.0.0.1 --directory dist/red-light-corrector &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          curl --max-time 2 --retry 5 --retry-connrefused --retry-delay 1 --fail --silent http://127.0.0.1:18748/index.html >/dev/null
+
+          export NODE_PATH="$RUNNER_TEMP/rlc-ci/node_modules"
+          export RLC_TEST_ZIP="$RUNNER_TEMP/rlc-exports.zip"
+          node tests/app.cjs
+          unzip -tq "$RLC_TEST_ZIP"
+          unzip -tq "$RLC_TEST_ZIP.jpeg.zip"
