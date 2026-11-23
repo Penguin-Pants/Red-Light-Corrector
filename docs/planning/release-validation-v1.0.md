@@ -15,6 +15,8 @@ Status on 23 November 2026. The implementation candidate is ready for owner test
 
 ## Repeatable development checks
 
+GitHub Actions runs the unit tests, offline package checks and packaged Chromium test on pull requests targeting `main` and on pushes to `main`. The workflow runs on Linux and uses synthetic images.
+
 - Run `node tests/correction.cjs` and `node tests/metadata.cjs`.
 - Run `node packaging/build.mjs`. A local copy of the pinned dependency archive can be passed as an argument.
 - Serve only `dist/red-light-corrector` on `127.0.0.1:18748` and run `node tests/app.cjs` with Playwright available. Set `RLC_CHROMIUM_PATH` for a system Chromium. Set `RLC_FULL_RES_TEST=1` for 100 synthetic 12 MP photos. Set `RLC_TEST_ZIP` to a temporary path to retain the synthetic ZIPs for inspection.
