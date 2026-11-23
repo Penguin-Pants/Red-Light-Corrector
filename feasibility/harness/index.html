@@ -6,6 +6,8 @@
 <title>Red Light Corrector feasibility</title>
 <link rel="stylesheet" href="harness.css">
 <script defer src="smoke.js"></script>
+<script defer src="photo-probe.js"></script>
+<script defer src="color-probe.js"></script>
 <main>
   <h1>Red Light Corrector feasibility</h1>
   <p>F1 launch smoke test</p>
@@ -13,5 +15,30 @@
   <button id="check-storage" type="button">Check saved marker</button>
   <p id="summary" role="status">Ready</p>
   <dl id="results"></dl>
+  <section aria-labelledby="heic-title">
+    <h2 id="heic-title">F2 HEIC decode</h2>
+    <p>Select the pinned decoder and one local HEIC file. Decoded colors are preliminary.</p>
+    <label>Decoder bundle <input id="decoder-bundle" type="file" accept=".js"></label>
+    <label>HEIC photo <input id="heic-photo" type="file" accept=".heic,.heif,image/heic,image/heif"></label>
+    <button id="decode-heic" type="button">Decode HEIC</button>
+    <button id="clear-heic" type="button">Clear photo</button>
+    <p id="heic-result" role="status">Ready</p>
+    <canvas id="heic-preview" aria-label="Bundled decoder preview" hidden></canvas>
+  </section>
+  <section aria-labelledby="folder-title">
+    <h2 id="folder-title">F5 folder access</h2>
+    <label>Input folder <input id="input-folder" type="file" webkitdirectory multiple></label>
+    <p id="folder-result" role="status">Ready</p>
+    <button id="check-output-picker" type="button">Check output folder picker</button>
+    <p id="picker-result" role="status">No output files are written by this check.</p>
+  </section>
+  <section aria-labelledby="color-title">
+    <h2 id="color-title">F7 color round trip</h2>
+    <p>Check two synthetic color patches through Display P3 and sRGB Canvas output.</p>
+    <button id="check-color" type="button">Check color round trip</button>
+    <p id="color-result" role="status">Ready</p>
+    <canvas id="color-preview" width="64" height="32" aria-label="Display P3 red and neutral gray patches" hidden></canvas>
+    <pre id="color-measurements"></pre>
+  </section>
 </main>
 </html>
